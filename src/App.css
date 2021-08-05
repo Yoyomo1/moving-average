@@ -7,17 +7,15 @@
 }
 
 .header-container {
-  height: 5vh;
+  height: 3rem;
   grid-area: header;
 }
 
 .side-bar-container {
-  height: 95vh;
   grid-area: side-bar;
 }
 
 .content-container {
-  height: 95vh;
   grid-area: section-content;
 }
 
