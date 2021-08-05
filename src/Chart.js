@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 
 const Chart = ({ stockData, dates, movingAverage }) => {
+  console.log(movingAverage);
   const data = {
     labels: dates,
     datasets: [

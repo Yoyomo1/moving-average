@@ -20,6 +20,7 @@ const Content = ({ currentSymbol }) => {
 
     if (data) {
       let arr = Object.entries(data);
+      arr.reverse();
 
       // Get array of 30 dates
       const dates = arr.map((subArr) => subArr[0]);
@@ -28,29 +29,30 @@ const Content = ({ currentSymbol }) => {
 
       arr = arr.map((element) => element[1]["5. adjusted close"]);
       let dataFor30Days = arr.slice(0, 30);
-      setStockData59Days(arr.slice(0, 59));
+      let dataFor59Days = arr.slice(0, 59);
+      setStockData59Days(dataFor59Days);
+      set30DayMovingAvg(dataFor59Days);
       return dataFor30Days;
     }
   };
 
-  const set30DayMovingAvg = () => {
+  const set30DayMovingAvg = (data) => {
     let movingAvg = [];
     let sum = 0;
     for (let i = 0; i < 30; i++) {
       for (let j = 0; j < 30; j++) {
-        sum += parseInt(stockData59Days[i + j]);
+        sum += parseInt(data[i + j]);
       }
       movingAvg.push(sum / 30.0);
       sum = 0;
     }
-
     setMovingAverage(movingAvg);
   };
 
   useEffect(() => {
     fetch(
-      `${baseURL}function=${params.f}&symbol=${params.symbol}&apikey=${params.apiKey}`
-      // "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=demo"
+      // `${baseURL}function=${params.f}&symbol=${params.symbol}&apikey=${params.apiKey}`
+      "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=demo"
     )
       .then((response) => {
         if (!response.ok) throw Error(response.statusText);
@@ -58,8 +60,8 @@ const Content = ({ currentSymbol }) => {
       })
       .then((data) => {
         const stockData = parseData(data);
+        console.log(stockData);
         setStockData(stockData);
-        set30DayMovingAvg();
       })
       .catch((error) => console.log(error));
   }, []);
