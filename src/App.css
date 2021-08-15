@@ -23,3 +23,22 @@
   height: 600px;
   width: 1000px;
 }
+
+.time-frame-container {
+  display: flex;
+  gap: 1rem;
+}
+
+.active-ticker-symbol {
+  padding-bottom: 1rem;
+}
+
+.time-frame-container > * {
+  cursor: pointer;
+}
+
+/* Toggled CSS selectors */
+
+.active-timeframe {
+  text-decoration: underline;
+}
