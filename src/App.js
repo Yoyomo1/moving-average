@@ -10,7 +10,10 @@ const App = () => {
   return (
     <div className="app">
       <Header />
-      <SideBar tickerSymbols={tickerSymbols} />
+      <SideBar
+        tickerSymbols={tickerSymbols}
+        setCurrentSymbol={setCurrentSymbol}
+      />
       <Content currentSymbol={currentSymbol} />
     </div>
   );

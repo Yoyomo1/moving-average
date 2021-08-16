@@ -20,7 +20,7 @@ const reducer = (state, action) => {
     case "3Y":
       return { currentTimeframe: 21 * 12 * 3 };
     default:
-      throw new Error("Invalid initial state for timeline!");
+      throw new Error(`Invalid initial state for timeline!`);
   }
 };
 
@@ -46,8 +46,17 @@ const Content = ({ currentSymbol }) => {
       let arr = Object.entries(data);
 
       // Get array of the approriate dates
-      const allDates = arr.map((subArr) => subArr[0]);
-      const requiredDates = allDates.slice(0, timeFrame.currentTimeframe);
+      let allDates = arr.map((subArr) => subArr[0]);
+      let requiredDates;
+
+      // Check if there's less data than timeFrame.currentTimeframe (newly created stocks)
+      // Stock needs to have at least 19 days more than the currentTimeframe
+      console.log(timeFrame.currentTimeframe, allDates.length - 19);
+      if (timeFrame.currentTimeframe + 19 <= allDates.length) {
+        requiredDates = allDates.slice(0, timeFrame.currentTimeframe);
+      } else {
+        requiredDates = allDates.slice(0, allDates.length - 19);
+      }
 
       // API returns dates from newest to oldest
       requiredDates.reverse();
@@ -55,16 +64,30 @@ const Content = ({ currentSymbol }) => {
 
       arr = arr.map((element) => element[1]["5. adjusted close"]);
       arr.reverse();
-      let dataFor30Days = arr.slice(
-        arr.length - timeFrame.currentTimeframe,
-        arr.length
-      );
-      let dataForMovingAvgCalculation = arr.slice(
-        arr.length - timeFrame.currentTimeframe - 19,
-        arr.length
-      );
+
+      let dataForCurrentTimeframe;
+      let dataForMovingAvgCalculation;
+
+      if (arr.length - timeFrame.currentTimeframe >= 19) {
+        dataForCurrentTimeframe = arr.slice(
+          arr.length - timeFrame.currentTimeframe,
+          arr.length
+        );
+        dataForMovingAvgCalculation = arr.slice(
+          arr.length - timeFrame.currentTimeframe - 19,
+          arr.length
+        );
+      }
+      // Account for newly created stocks (don't have enough data for timeframe)
+      // Will display the maximum timeframe
+      else {
+        // Can't calculate moving avg on the first 19 days
+        dataForCurrentTimeframe = arr.slice(19, arr.length);
+        dataForMovingAvgCalculation = arr;
+      }
+
       set20DayMovingAvg(dataForMovingAvgCalculation);
-      return dataFor30Days;
+      return dataForCurrentTimeframe;
     }
   };
 
@@ -82,6 +105,9 @@ const Content = ({ currentSymbol }) => {
   };
 
   useEffect(() => {
+    console.log(
+      `${baseURL}function=${params.f}&symbol=${params.symbol}&outputsize=${params.outputSize}&apikey=${params.apiKey}`
+    );
     fetch(
       `${baseURL}function=${params.f}&symbol=${params.symbol}&outputsize=${params.outputSize}&apikey=${params.apiKey}`
     )
@@ -95,12 +121,13 @@ const Content = ({ currentSymbol }) => {
         setStockData(stockData); // and not every timeframe change
       })
       .catch((error) => console.log(error));
-  }, []);
+  }, [currentSymbol]);
 
   useEffect(() => {
     if (stockData) {
       setStockData(parseData(originalData));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeFrame]);
 
   return (
@@ -108,26 +135,38 @@ const Content = ({ currentSymbol }) => {
       <h3 className="active-ticker-symbol">{currentSymbol}</h3>
       <div className="time-frame-container">
         <h6
-          className={timeFrame.currentTimeframe == 21 && "active-timeframe"}
+          className={
+            timeFrame.currentTimeframe === 21 ? "active-timeframe" : undefined
+          }
           onClick={() => dispatch({ type: "1M" })}
         >
           1M
         </h6>
         <h6
-          className={timeFrame.currentTimeframe == 21 * 3 && "active-timeframe"}
+          className={
+            timeFrame.currentTimeframe === 21 * 3
+              ? "active-timeframe"
+              : undefined
+          }
           onClick={() => dispatch({ type: "3M" })}
         >
           3M
         </h6>
         <h6
-          className={timeFrame.currentTimeframe == 21 * 6 && "active-timeframe"}
+          className={
+            timeFrame.currentTimeframe === 21 * 6
+              ? "active-timeframe"
+              : undefined
+          }
           onClick={() => dispatch({ type: "6M" })}
         >
           6M
         </h6>
         <h6
           className={
-            timeFrame.currentTimeframe == 21 * 12 && "active-timeframe"
+            timeFrame.currentTimeframe === 21 * 12
+              ? "active-timeframe"
+              : undefined
           }
           onClick={() => dispatch({ type: "1Y" })}
         >
@@ -135,7 +174,9 @@ const Content = ({ currentSymbol }) => {
         </h6>
         <h6
           className={
-            timeFrame.currentTimeframe == 21 * 12 * 3 && "active-timeframe"
+            timeFrame.currentTimeframe === 21 * 12 * 3
+              ? "active-timeframe"
+              : undefined
           }
           onClick={() => dispatch({ type: "3Y" })}
         >

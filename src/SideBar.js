@@ -1,6 +1,6 @@
 import React from "react";
 
-const SideBar = ({ tickerSymbols }) => {
+const SideBar = ({ tickerSymbols, setCurrentSymbol }) => {
   return (
     <aside className="side-bar-container">
       <h3>Ticker Symbols</h3>
@@ -8,7 +8,12 @@ const SideBar = ({ tickerSymbols }) => {
         {tickerSymbols.map(({ symbol, id }) => {
           return (
             <li key={id}>
-              <a href="#">{symbol}</a>
+              <button
+                className="ticker-symbol"
+                onClick={() => setCurrentSymbol(symbol)}
+              >
+                {symbol}
+              </button>
             </li>
           );
         })}

@@ -17,6 +17,7 @@
 
 .content-container {
   grid-area: section-content;
+  padding-left: 1rem;
 }
 
 .chart-container {
@@ -34,6 +35,12 @@
 }
 
 .time-frame-container > * {
+  cursor: pointer;
+}
+
+.ticker-symbol {
+  background: none;
+  border: transparent;
   cursor: pointer;
 }
 
