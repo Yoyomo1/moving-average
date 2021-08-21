@@ -54,7 +54,7 @@ const Chart = React.memo(({ stockData, dates, movingAverage }) => {
     <div className="chart-container">
       <Line
         data={data}
-        width={400}
+        width={1000}
         height={400}
         options={{ maintainAspectRatio: false }}
       />

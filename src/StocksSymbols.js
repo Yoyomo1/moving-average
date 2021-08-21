@@ -1,10 +1,10 @@
 import React from "react";
 
-const SideBar = ({ tickerSymbols, setCurrentSymbol }) => {
+const StockSymbol = ({ tickerSymbols, setCurrentSymbol }) => {
   return (
     <aside className="side-bar-container">
-      <h3>Ticker Symbols</h3>
-      <ul>
+      <h3>Symbols</h3>
+      <ul className="side-bar-list">
         {tickerSymbols.map(({ symbol, id }) => {
           return (
             <li key={id}>
@@ -22,4 +22,4 @@ const SideBar = ({ tickerSymbols, setCurrentSymbol }) => {
   );
 };
 
-export default SideBar;
+export default StockSymbol;

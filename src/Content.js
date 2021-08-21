@@ -51,7 +51,6 @@ const Content = ({ currentSymbol }) => {
 
       // Check if there's less data than timeFrame.currentTimeframe (newly created stocks)
       // Stock needs to have at least 19 days more than the currentTimeframe
-      console.log(timeFrame.currentTimeframe, allDates.length - 19);
       if (timeFrame.currentTimeframe + 19 <= allDates.length) {
         requiredDates = allDates.slice(0, timeFrame.currentTimeframe);
       } else {
@@ -121,6 +120,7 @@ const Content = ({ currentSymbol }) => {
         setStockData(stockData); // and not every timeframe change
       })
       .catch((error) => console.log(error));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSymbol]);
 
   useEffect(() => {
