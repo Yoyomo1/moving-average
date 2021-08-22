@@ -19,7 +19,7 @@ const App = () => {
           currentID++;
           setAllSymbols((prev) => [...prev, newObj]);
           currentString = "";
-        } else {
+        } else if (symbols[i] != " ") {
           currentString += symbols[i];
         }
       }

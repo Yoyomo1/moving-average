@@ -9,11 +9,12 @@ li {
 ::-webkit-scrollbar {
   -webkit-appearance: none;
   height: 0.5rem;
+  width: 0.5rem;
 }
 
 ::-webkit-scrollbar-thumb {
   height: 8px;
-  width: 50px;
+  width: 10px;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
@@ -34,6 +35,10 @@ li {
   margin-bottom: 1.3rem;
 }
 
+.stock-symbols-container {
+  height: 7.5rem;
+}
+
 .stock-symbol-container {
   display: flex;
   flex-direction: column;
@@ -42,18 +47,23 @@ li {
 }
 
 .stock-symbol-header {
+  display: inline-block;
   letter-spacing: 10px;
-  margin-bottom: 1rem;
 }
 
 .stock-symbol-list {
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-auto-flow: column;
+  grid-auto-columns: 6ch;
   gap: 1rem;
   width: var(--chart-width);
   overflow: scroll;
   padding-bottom: 1rem;
+}
+
+.stock-symbol-list-item {
+  /* width: 6ch; */
 }
 
 .content-container {
@@ -90,6 +100,24 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.query-form {
+  display: inline-block;
+}
+
+.stock-symbol-header-container {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.input-arrow {
+  display: inline-block;
+  height: 0.8rem;
+  width: 0.8rem;
+  border-right: 2px solid grey;
+  border-bottom: 2px solid grey;
+  transform: rotateZ(-45deg) translate(0, 0.15rem);
 }
 
 /* Toggled CSS selectors */
