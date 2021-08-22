@@ -8,6 +8,7 @@
 
 :root {
   --sid-bar-bg-cl: #65655e;
+  --chart-width: 1000px;
 }
 
 body {

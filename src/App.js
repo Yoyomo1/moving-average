@@ -9,22 +9,21 @@ const App = () => {
   const [currentSymbol, setCurrentSymbol] = useState(tickerSymbols[0].symbol);
   const [allSymbols, setAllSymbols] = useState([]);
 
-  const fetchSymbols = () => {
-    let currentID = 1;
-    let currentString = "";
-    for (let i = 0; i < symbols.length; i++) {
-      if (symbols[i] === "\n") {
-        const newObj = { id: currentID, symbol: currentString };
-        currentID++;
-        setAllSymbols((prev) => [...prev, newObj]);
-        currentString = "";
-      } else {
-        currentString += symbols[i];
-      }
-    }
-  };
-
   useEffect(() => {
+    const fetchSymbols = () => {
+      let currentID = 1;
+      let currentString = "";
+      for (let i = 0; i < symbols.length; i++) {
+        if (symbols[i] === "\n") {
+          const newObj = { id: currentID, symbol: currentString };
+          currentID++;
+          setAllSymbols((prev) => [...prev, newObj]);
+          currentString = "";
+        } else {
+          currentString += symbols[i];
+        }
+      }
+    };
     fetchSymbols();
   }, []);
 
