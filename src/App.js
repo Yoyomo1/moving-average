@@ -16,7 +16,7 @@ const App = () => {
       for (let i = 0; i < symbols.length; i++) {
         if (symbols[i] === "\n") {
           // Set current symbol to first symbol
-          if (i === 0) {
+          if (currentID === 1) {
             setCurrentSymbol(currentString);
           }
           const newObj = { id: currentID, symbol: currentString };
