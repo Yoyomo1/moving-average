@@ -1,18 +1,3 @@
-const tickerSymbols = [
-  {
-    id: 1,
-    symbol: "AAPL",
-  },
-  {
-    id: 2,
-    symbol: "TSLA",
-  },
-  {
-    id: 3,
-    symbol: "RBLX",
-  },
-];
-
 const symbols = `AAPL
 ABBV
 ABT 
@@ -75,4 +60,4 @@ XLU
 XOM
 XOP`;
 
-export { tickerSymbols, symbols };
+export { symbols };
