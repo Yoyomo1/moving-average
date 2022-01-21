@@ -52,6 +52,7 @@ SU
 T
 TSLA
 TSM
+U
 VTRS
 VZ
 WFC

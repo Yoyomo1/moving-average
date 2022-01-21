@@ -1,6 +1,6 @@
 import React from "react";
 import Chart from "./Chart";
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useReducer, useCallback } from "react";
 
 // currentTimeframe in months
 const initialState = {
@@ -33,7 +33,7 @@ const Content = ({ currentSymbol }) => {
 
   const baseURL = "https://www.alphavantage.co/query?";
   const params = {
-    f: "TIME_SERIES_DAILY_ADJUSTED",
+    f: "TIME_SERIES_DAILY",
     symbol: currentSymbol,
     outputSize: "full",
     apiKey: "IBA86A2CGCBIGGHP",
@@ -61,7 +61,7 @@ const Content = ({ currentSymbol }) => {
       requiredDates.reverse();
       setListOfDates(requiredDates);
 
-      arr = arr.map((element) => element[1]["5. adjusted close"]);
+      arr = arr.map((element) => element[1]["4. close"]);
       arr.reverse();
 
       let dataForCurrentTimeframe;
@@ -104,9 +104,6 @@ const Content = ({ currentSymbol }) => {
   };
 
   useEffect(() => {
-    console.log(
-      `${baseURL}function=${params.f}&symbol=${params.symbol}&outputsize=${params.outputSize}&apikey=${params.apiKey}`
-    );
     fetch(
       `${baseURL}function=${params.f}&symbol=${params.symbol}&outputsize=${params.outputSize}&apikey=${params.apiKey}`
     )
@@ -121,7 +118,13 @@ const Content = ({ currentSymbol }) => {
       })
       .catch((error) => console.log(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentSymbol]);
+  }, [
+    currentSymbol,
+    params.apiKey,
+    params.f,
+    params.outputSize,
+    params.symbol,
+  ]);
 
   useEffect(() => {
     if (stockData) {
