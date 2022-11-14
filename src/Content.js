@@ -33,7 +33,7 @@ const Content = ({ currentSymbol }) => {
 
   const baseURL = "https://www.alphavantage.co/query?";
   const params = {
-    f: "TIME_SERIES_DAILY",
+    f: "TIME_SERIES_DAILY_ADJUSTED",
     symbol: currentSymbol,
     outputSize: "full",
     apiKey: "IBA86A2CGCBIGGHP",
